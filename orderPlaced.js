@@ -25,9 +25,3 @@ httpRequest.onreadystatechange = function()
     }
 }
 httpRequest.send(null);
-// filepath: c:\Users\DONLEAD\Desktop\E-CommerceWebsite-master\cart.js
-
-buttonTag.onclick = function() {
-    console.log("clicked");
-    payWithPaystack(totalAmount); // Pass the total amount to the payment function
-};

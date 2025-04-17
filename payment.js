@@ -1,23 +1,39 @@
-const paymentForm = document.getElementById('paymentForm');
- paymentForm.addEventListener("submit", payWithPaystack, false);
- function payWithPaystack(e){
-  e.preventDefault();
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", function () {
+  const paymentForm = document.getElementById("paymentForm");
 
+  if (!paymentForm) {
+    console.error("Error: Form with ID 'paymentForm' not found.");
+    return;
+  }
 
-  let handler = PaystackPop.setup({
-   key: 'pk_test_59195443eee0e11f5ae308953e2a144c489269ed', // Replace with your public key
-    email: document.getElementById("email-address").value,
-   amount: document.getElementById("amount").value * 100,
-   ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-    // label: "Optional string that replaces customer email"
-   onClose: function(){
-      alert('Window closed.');
-    },
-   callback: function(response){
-      let message = 'Payment complete! Reference: ' + response.reference;
-      alert(message);
-   }
- });
+  paymentForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log("Form submission prevented."); // Debug log
 
-  handler.openIframe();
-}
+    // Paystack integration
+    const email = document.getElementById("email-address").value;
+    const amount = document.getElementById("amountInput").value;
+
+    if (!email || !amount) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    let handler = PaystackPop.setup({
+      key: "pk_test_59195443eee0e11f5ae308953e2a144c489269ed",
+      email: email,
+      amount: amount * 100,
+      ref: "order_" + Date.now(),
+      onClose: function () {
+        alert("Payment window closed.");
+      },
+      callback: function (response) {
+        window.location.href =
+          "orderPlaced.html?reference=" + response.reference;
+      },
+    });
+
+    handler.openIframe();
+  });
+});
