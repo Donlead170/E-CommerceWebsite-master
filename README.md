@@ -4,7 +4,7 @@
  
  
 ### Home page
-![1]([https://imgur.com/a/FRZSUG1])
+![1](https://imgur.com/a/FRZSUG1)
 
 
 
